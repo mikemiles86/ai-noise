@@ -52,9 +52,38 @@ a { color:var(--accent); }
   <p class="lede">Each card below is one experiment: random noise was handed to an AI as the
   entire request for a program, a piece of writing, or an image. The AI was told which of the
   three to make, and nothing else.</p>
-  <p class="stats">1 experiments · 1 image</p>
-  <div class="filters" role="group" aria-label="Filter by task"><button data-task="all" aria-pressed="true">All</button><button data-task="image" aria-pressed="false">image</button></div>
+  <p class="stats">2 experiments · 1 code · 1 image</p>
+  <div class="filters" role="group" aria-label="Filter by task"><button data-task="all" aria-pressed="true">All</button><button data-task="code" aria-pressed="false">code</button><button data-task="image" aria-pressed="false">image</button></div>
   <main class="grid">
+<article class="card" data-task="code">
+  <header>
+    <span class="badge task">code</span><span class="badge">python</span>
+    <time datetime="2026-11-05T14:44:41+00:00">2026-11-05 14:44 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>keysmash · 55 chars · seed 240999624455983</small></h3>
+    <pre class="noise">yuIoio&#x27;nmmmnbn;Mnmmnbb lkjkJhH xcVccxxx&#x27;kkllkkllll&#x27;hjkj</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <pre class="code">from collections import Counter
+
+text = &quot;yuIoio&#x27;nmmmnbn;Mnmmnbb lkjkJhH xcVccxxx&#x27;kkllkkllll&#x27;hjkj&quot;
+
+# Split on spaces, apostrophes, and semicolons
+segments = [s for s in text.replace(&quot;;&quot;, &quot; &quot;).replace(&quot;&#x27;&quot;, &quot; &quot;).split() if s]
+counts = Counter(c.lower() for c in text if c.isalpha())
+
+print(&quot;Input:&quot;, text)
+print(&quot;Segments:&quot;, segments)
+print(&quot;Letter frequencies (case-insensitive):&quot;)
+for ch, n in counts.most_common():
+    print(f&quot;  {ch}: {&#x27;#&#x27; * n} ({n})&quot;)
+</pre>
+  </section>
+  <footer><span>claude-opus-5-5</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T144441Z-code-db301901b72f">Full run</a></footer>
+</article>
 <article class="card" data-task="image">
   <header>
     <span class="badge task">image</span>
