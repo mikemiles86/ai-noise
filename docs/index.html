@@ -52,9 +52,25 @@ a { color:var(--accent); }
   <p class="lede">Each card below is one experiment: random noise was handed to an AI as the
   entire request for a program, a piece of writing, or an image. The AI was told which of the
   three to make, and nothing else.</p>
-  <p class="stats">0 experiments</p>
-  <div class="filters" role="group" aria-label="Filter by task"><button data-task="all" aria-pressed="true">All</button></div>
-  <main class="grid"><p class="empty">No experiments yet.</p></main>
+  <p class="stats">1 experiments · 1 image</p>
+  <div class="filters" role="group" aria-label="Filter by task"><button data-task="all" aria-pressed="true">All</button><button data-task="image" aria-pressed="false">image</button></div>
+  <main class="grid">
+<article class="card" data-task="image">
+  <header>
+    <span class="badge task">image</span>
+    <time datetime="2026-11-05T14:27:43+00:00">2026-11-05 14:27 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>syllables · 284 chars · seed 103707054748426</small></h3>
+    <pre class="noise">bloock stam greekzhirk railboobryck pleaquaish troupwead doush nitmoosnoux glailroush skoop reng feeb snewash drashdroobgouz drashzep skoub plaelboosthoul vasnytskid lalkroomteesh tunstouz reng bingnot zapzum thex waeksnobgack tookzarkdroud ploptreez nipquen zhout quaep blooblol glu</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <a href="runs/20261105T142743Z-image-5e522e28b30a/output.svg"><img class="svg" src="runs/20261105T142743Z-image-5e522e28b30a/output.svg" alt="Image generated from noise" loading="lazy"></a>
+  </section>
+  <footer><span>claude-opus-5-5</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T142743Z-image-5e522e28b30a">Full run</a></footer>
+</article></main>
   <p class="stats">Source and raw results: <a href="https://github.com/mikemiles86/ai-noise">github.com/mikemiles86/ai-noise</a></p>
 </div>
 <script>

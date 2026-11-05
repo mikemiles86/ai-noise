@@ -14,7 +14,9 @@ runs in [`results/`](results/).
 ## Latest results
 
 <!-- RESULTS:START -->
-_No experiments yet. Run one with `ainoise run`._
+| When (UTC) | Task | Noise | Fed to the AI | Result |
+|---|---|---|---|---|
+| 2026-11-05 14:27 | image | syllables | <code>bloock stam greekzhirk railboobryck pleaquaish troupwead do…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T142743Z-image-5e522e28b30a) |
 <!-- RESULTS:END -->
 
 ## How it works
