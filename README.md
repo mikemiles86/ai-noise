@@ -16,6 +16,9 @@ runs in [`results/`](results/).
 <!-- RESULTS:START -->
 | When (UTC) | Task | Noise | Fed to the AI | Result |
 |---|---|---|---|---|
+| 2026-11-05 14:51 | code | mixed | <code>≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-code-1a6e8db06a7c) |
+| 2026-11-05 14:51 | image | mixed | <code>≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-image-1a6e8db06a7c) |
+| 2026-11-05 14:51 | text | mixed | <code>≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-text-1a6e8db06a7c) |
 | 2026-11-05 14:48 | text | base64 | <code>wLWKsdoENfag72eKtyEfBHzsFS9ZbLoijwEVRYPLHyCMvo3BCXSpZ9QsAUU…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T144804Z-text-fcbec5b5bef6) |
 | 2026-11-05 14:44 | code | keysmash | <code>yuIoio&#x27;nmmmnbn;Mnmmnbb lkjkJhH xcVccxxx&#x27;kkllkkllll&#x27;hjkj</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T144441Z-code-db301901b72f) |
 | 2026-11-05 14:27 | image | syllables | <code>bloock stam greekzhirk railboobryck pleaquaish troupwead do…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T142743Z-image-5e522e28b30a) |

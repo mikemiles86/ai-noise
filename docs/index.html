@@ -52,9 +52,160 @@ a { color:var(--accent); }
   <p class="lede">Each card below is one experiment: random noise was handed to an AI as the
   entire request for a program, a piece of writing, or an image. The AI was told which of the
   three to make, and nothing else.</p>
-  <p class="stats">3 experiments · 1 code · 1 image · 1 text</p>
+  <p class="stats">6 experiments · 2 code · 2 image · 2 text</p>
   <div class="filters" role="group" aria-label="Filter by task"><button data-task="all" aria-pressed="true">All</button><button data-task="code" aria-pressed="false">code</button><button data-task="image" aria-pressed="false">image</button><button data-task="text" aria-pressed="false">text</button></div>
   <main class="grid">
+<article class="card" data-task="code">
+  <header>
+    <span class="badge task">code</span><span class="badge">python</span>
+    <time datetime="2026-11-05T14:51:54+00:00">2026-11-05 14:51 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>mixed · 121 chars · seed 29062125873788</small></h3>
+    <pre class="noise">≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!MnBb;mmnb Dfgfds zzxcvvbnnmMm qqwqwqqqqQqw xxzzZxxtrtr;Pop;Cxzzzz</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <pre class="code">import re
+import sys
+from collections import Counter
+
+DEFAULT_TEXT = (
+    &quot;≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!MnBb;&quot;
+    &quot;mmnb Dfgfds zzxcvvbnnmMm qqwqwqqqqQqw xxzzZxxtrtr;Pop;Cxzzzz&quot;
+)
+
+
+def tokenize(text):
+    &quot;&quot;&quot;Split on semicolons and whitespace, dropping empty pieces.&quot;&quot;&quot;
+    return [t for t in re.split(r&quot;[;\s]+&quot;, text) if t]
+
+
+def normalize(token):
+    &quot;&quot;&quot;Keep only ASCII letters, lowercased, for comparison.&quot;&quot;&quot;
+    return &quot;&quot;.join(ch.lower() for ch in token if ch.isascii() and ch.isalpha())
+
+
+def is_palindrome(token):
+    core = normalize(token)
+    return len(core) &gt; 1 and core == core[::-1]
+
+
+def main():
+    text = sys.stdin.read() if not sys.stdin.isatty() else &quot;&quot;
+    if not text.strip():
+        text = DEFAULT_TEXT
+
+    tokens = tokenize(text)
+    print(f&quot;Total tokens: {len(tokens)}\n&quot;)
+
+    print(f&quot;{&#x27;Token&#x27;:&lt;25}{&#x27;Letters&#x27;:&lt;25}{&#x27;Palindrome&#x27;}&quot;)
+    print(&quot;-&quot; * 60)
+    for tok in tokens:
+        core = normalize(tok)
+        print(f&quot;{tok:&lt;25}{core:&lt;25}{&#x27;yes&#x27; if is_palindrome(tok) else &#x27;no&#x27;}&quot;)
+
+    palindromes = [t for t in tokens if is_palindrome(t)]
+    print(&quot;\nPalindromic tokens:&quot;, &quot;, &quot;.join(palindromes) if palindromes else &quot;none&quot;)
+
+    letters = Counter(normalize(text))
+    print(&quot;\nMost common letters:&quot;)
+    for ch, n in letters.most_common(5):
+        print(f&quot;  {ch}: {n}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</pre>
+  </section>
+  <footer><span>claude-opus-5-5</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-code-1a6e8db06a7c">Full run</a></footer>
+</article>
+<article class="card" data-task="image">
+  <header>
+    <span class="badge task">image</span>
+    <time datetime="2026-11-05T14:51:54+00:00">2026-11-05 14:51 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>mixed · 121 chars · seed 29062125873788</small></h3>
+    <pre class="noise">≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!MnBb;mmnb Dfgfds zzxcvvbnnmMm qqwqwqqqqQqw xxzzZxxtrtr;Pop;Cxzzzz</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <a href="runs/20261105T145154Z-image-1a6e8db06a7c/output.svg"><img class="svg" src="runs/20261105T145154Z-image-1a6e8db06a7c/output.svg" alt="Image generated from noise" loading="lazy"></a>
+  </section>
+  <footer><span>claude-opus-5-5</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-image-1a6e8db06a7c">Full run</a></footer>
+</article>
+<article class="card" data-task="text">
+  <header>
+    <span class="badge task">text</span>
+    <time datetime="2026-11-05T14:51:54+00:00">2026-11-05 14:51 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>mixed · 121 chars · seed 29062125873788</small></h3>
+    <pre class="noise">≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!MnBb;mmnb Dfgfds zzxcvvbnnmMm qqwqwqqqqQqw xxzzZxxtrtr;Pop;Cxzzzz</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <pre class="prose"># Field Notes on an Accidental Message
+
+It arrived without a subject line, the way weather arrives.
+
+First came the symbols, a scatter of glyphs from alphabets that have never shared a table: a Hebrew letter leaning on a Greek one, a Cyrillic character standing politely beside a mathematical sign that means *not quite equal to*. Japanese kana tumbled in like dropped coins. A single Chinese character sat in the middle of it all, looking dignified and slightly lost.
+
+Then a birthday cake. 🎂
+
+Then two open hands. 👐
+
+I have decided this is the most honest greeting card anyone has ever sent me.
+
+---
+
+## The Translation
+
+Linguists will tell you that meaning lives in patterns, so I looked for patterns.
+
+**`zxxzzz`**: the bottom row of the keyboard, swept left to right like a hand smoothing a tablecloth. This is the sound of someone settling in.
+
+**`oppo`**: a palindrome, the same coming and going. Possibly a phone brand. Possibly a phone, sliding out of a pocket, reporting its own name.
+
+**`hJhj`**: hesitation, with one capital letter for courage.
+
+**`sdfdsasssass`**: the home row, where fingers are told to rest and wait. Someone was resting here. Someone was waiting.
+
+**`MnBb`** and **`mmnb`**: the soft consonants, the hum before speech. *Mmm. Nnn. Bbb.* The noise you make when you&#x27;re about to say something kind and haven&#x27;t found the words.
+
+**`qqwqwqqqqQqw`**: the top-left corner, worried at like a loose thread. A small, determined paw. Or a toddler&#x27;s thumb. Or a cat who has discovered that this warm flat thing makes the human look up.
+
+**`Pop`**: the only real word in the whole message, shouted with a capital letter.
+
+**`Cxzzzz`**: and then, at the end, a trailing off into sleep.
+
+---
+
+## What I Think It Says
+
+&gt; *Hello. I&#x27;m here. I couldn&#x27;t find the right letters, so I used all of them. There was a cake involved, I think, and my hands were open. Something went pop. I&#x27;m tired now. Goodnight.*
+
+---
+
+## A Note in Defense of Nonsense
+
+We spend so much effort being understood. We draft and redraft, we delete the second exclamation point, we wonder if &quot;Thanks!&quot; sounds cold without a smiley face. And then a message like this arrives, sent by a pocket, a paw, a child, a sleeper&#x27;s elbow, or a moment of pure keyboard joy, and it asks for nothing. It doesn&#x27;t need to be correct. It only needs to have happened.
+
+Somewhere, someone&#x27;s fingers touched the keys and the keys answered. That is the whole miracle of writing, stripped down to the studs.
+
+So whoever you are, and whatever you meant:
+
+**Happy birthday, maybe.** Open hands right back to you. 👐
+
+And *zzzz*, I hope you slept well.
+</pre>
+  </section>
+  <footer><span>claude-opus-5-5</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-text-1a6e8db06a7c">Full run</a></footer>
+</article>
 <article class="card" data-task="text">
   <header>
     <span class="badge task">text</span>
