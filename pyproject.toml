@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ainoise"
+version = "0.1.0"
+description = "Feed an AI nothing but noise and see what it makes."
+requires-python = ">=3.10"
+dependencies = ["anthropic>=2.5"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+ainoise = "ainoise.cli:main"
+
+[tool.setuptools]
+packages = ["ainoise"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

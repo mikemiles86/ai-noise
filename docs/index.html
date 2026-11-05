@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Noise</title>
+<meta name="description" content="What does an AI make when you feed it nothing but noise?">
+<style>
+:root { --bg:#f6f5f2; --fg:#1c1b19; --muted:#6b6862; --card:#fff; --line:#e3e0da;
+  --code:#f1efea; --accent:#5b4bdb; --warn:#b4541a; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#121212; --fg:#ecebe8; --muted:#9a968f; --card:#1c1c1c; --line:#2e2d2b;
+    --code:#242322; --accent:#a99bff; --warn:#f0a36b; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+.wrap { max-width:1200px; margin:0 auto; padding:32px 16px 64px; }
+h1 { font-size:2rem; margin:0 0 4px; letter-spacing:-0.02em; }
+.lede { color:var(--muted); margin:0 0 20px; max-width:60ch; }
+.stats { color:var(--muted); font-size:0.9rem; margin-bottom:16px; }
+.filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+.filters button { border:1px solid var(--line); background:var(--card); color:var(--fg);
+  padding:6px 14px; border-radius:999px; cursor:pointer; font:inherit; }
+.filters button[aria-pressed="true"] { background:var(--accent); border-color:var(--accent); color:#fff; }
+.grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); }
+@media (max-width:400px) { .grid { grid-template-columns:1fr; } }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px; display:flex; flex-direction:column; gap:12px; min-width:0; }
+.card header { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.card time { margin-left:auto; color:var(--muted); font-size:0.8rem; }
+.badge { font-size:0.75rem; padding:2px 8px; border-radius:999px; background:var(--code); }
+.badge.task { background:var(--accent); color:#fff; }
+.badge.warn { color:var(--warn); }
+h3 { font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted);
+  margin:0 0 6px; font-weight:600; }
+h3 small { text-transform:none; letter-spacing:0; font-weight:400; }
+pre { margin:0; background:var(--code); border-radius:8px; padding:10px; overflow:auto;
+  max-height:260px; font:12.5px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace; }
+pre.noise { white-space:pre-wrap; word-break:break-all; max-height:120px; }
+pre.prose { white-space:pre-wrap; font-family:Georgia,serif; font-size:14px; }
+img.svg { display:block; width:100%; height:auto; max-height:360px; object-fit:contain;
+  background:#fff; border-radius:8px; border:1px solid var(--line); }
+.card footer { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--muted);
+  margin-top:auto; }
+a { color:var(--accent); }
+.empty { color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AI Noise</h1>
+  <p class="lede">Each card below is one experiment: random noise was handed to an AI as the
+  entire request for a program, a piece of writing, or an image. The AI was told which of the
+  three to make, and nothing else.</p>
+  <p class="stats">0 experiments</p>
+  <div class="filters" role="group" aria-label="Filter by task"><button data-task="all" aria-pressed="true">All</button></div>
+  <main class="grid"><p class="empty">No experiments yet.</p></main>
+  <p class="stats">Source and raw results: <a href="https://github.com/mikemiles86/ai-noise">github.com/mikemiles86/ai-noise</a></p>
+</div>
+<script>
+document.querySelectorAll('.filters button').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.filters button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+  const t = btn.dataset.task;
+  document.querySelectorAll('.card').forEach(c => c.hidden = t !== 'all' && c.dataset.task !== t);
+}));
+</script>
+</body>
+</html>

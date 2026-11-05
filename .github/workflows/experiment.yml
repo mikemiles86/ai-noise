@@ -1,0 +1,74 @@
+name: Run noise experiment
+
+# Feeds random noise to Claude as a task, saves the run under results/,
+# rebuilds the showcase (docs/ and the README table) and commits it to main.
+# Needs a repository secret named ANTHROPIC_API_KEY.
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: What to ask the AI to make
+        type: choice
+        options: [all, code, text, image]
+        default: all
+      strategy:
+        description: How to make the noise
+        type: choice
+        options: [random, chars, unicode, syllables, word_salad, keysmash, base64, mixed]
+        default: random
+      count:
+        description: How many experiments (fresh noise each)
+        type: number
+        default: 1
+      effort:
+        description: Model effort level
+        type: choice
+        options: [low, medium, high, xhigh, max]
+        default: medium
+  # Uncomment to run one experiment of each task every day at 09:00 UTC.
+  # schedule:
+  #   - cron: "0 9 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noise-experiment
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Run experiment
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TASK: ${{ inputs.task || 'all' }}
+          STRATEGY: ${{ inputs.strategy || 'random' }}
+          COUNT: ${{ inputs.count || 1 }}
+          EFFORT: ${{ inputs.effort || 'medium' }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::Add an ANTHROPIC_API_KEY repository secret to run experiments."
+            exit 1
+          fi
+          ainoise run --task "$TASK" --strategy "$STRATEGY" --count "$COUNT" --effort "$EFFORT"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results docs README.md
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit."
+            exit 0
+          fi
+          git commit -m "Add noise experiment results ($(date -u +%Y-%m-%dT%H:%MZ))"
+          git push origin HEAD:main
