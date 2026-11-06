@@ -26,11 +26,13 @@ h1 { font-size:2rem; margin:0 0 4px; letter-spacing:-0.02em; }
 @media (max-width:400px) { .grid { grid-template-columns:1fr; } }
 .card { background:var(--card); border:1px solid var(--line); border-radius:12px;
   padding:16px; display:flex; flex-direction:column; gap:12px; min-width:0; }
+.card[hidden] { display:none; }
 .card header { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
 .card time { margin-left:auto; color:var(--muted); font-size:0.8rem; }
 .badge { font-size:0.75rem; padding:2px 8px; border-radius:999px; background:var(--code); }
 .badge.task { background:var(--accent); color:#fff; }
 .badge.warn { color:var(--warn); }
+.badge.model { border:1px solid var(--accent); background:transparent; color:var(--accent); }
 h3 { font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted);
   margin:0 0 6px; font-weight:600; }
 h3 small { text-transform:none; letter-spacing:0; font-weight:400; }
@@ -51,13 +53,14 @@ a { color:var(--accent); }
   <h1>AI Noise</h1>
   <p class="lede">Each card below is one experiment: random noise was handed to an AI as the
   entire request for a program, a piece of writing, or an image. The AI was told which of the
-  three to make, and nothing else.</p>
-  <p class="stats">6 experiments · 2 code · 2 image · 2 text</p>
-  <div class="filters" role="group" aria-label="Filter by task"><button data-task="all" aria-pressed="true">All</button><button data-task="code" aria-pressed="false">code</button><button data-task="image" aria-pressed="false">image</button><button data-task="text" aria-pressed="false">text</button></div>
+  three to make, and nothing else. Each card names the model that made it.</p>
+  <p class="stats">6 experiments · 2 code · 2 image · 2 text · 1 model</p>
+  <div class="filters" role="group" aria-label="Filter by task" data-key="task"><button data-value="all" aria-pressed="true">All tasks</button><button data-value="code" aria-pressed="false">code</button><button data-value="image" aria-pressed="false">image</button><button data-value="text" aria-pressed="false">text</button></div>
+  <div class="filters" role="group" aria-label="Filter by model" data-key="model"><button data-value="all" aria-pressed="true">All models</button><button data-value="claude-opus-5-5" aria-pressed="false">claude-opus-5-5</button></div>
   <main class="grid">
-<article class="card" data-task="code">
+<article class="card" data-task="code" data-model="claude-opus-5-5">
   <header>
-    <span class="badge task">code</span><span class="badge">python</span>
+    <span class="badge task">code</span><span class="badge model" title="claude">claude-opus-5-5</span><span class="badge">python</span>
     <time datetime="2026-11-05T14:51:54+00:00">2026-11-05 14:51 UTC</time>
   </header>
   <section>
@@ -118,12 +121,12 @@ if __name__ == &quot;__main__&quot;:
     main()
 </pre>
   </section>
-  <footer><span>claude-opus-5-5</span>
+  <footer><span>claude-opus-5-5 · claude</span>
     <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-code-1a6e8db06a7c">Full run</a></footer>
 </article>
-<article class="card" data-task="image">
+<article class="card" data-task="image" data-model="claude-opus-5-5">
   <header>
-    <span class="badge task">image</span>
+    <span class="badge task">image</span><span class="badge model" title="claude">claude-opus-5-5</span>
     <time datetime="2026-11-05T14:51:54+00:00">2026-11-05 14:51 UTC</time>
   </header>
   <section>
@@ -134,12 +137,12 @@ if __name__ == &quot;__main__&quot;:
     <h3>What came out</h3>
     <a href="runs/20261105T145154Z-image-1a6e8db06a7c/output.svg"><img class="svg" src="runs/20261105T145154Z-image-1a6e8db06a7c/output.svg" alt="Image generated from noise" loading="lazy"></a>
   </section>
-  <footer><span>claude-opus-5-5</span>
+  <footer><span>claude-opus-5-5 · claude</span>
     <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-image-1a6e8db06a7c">Full run</a></footer>
 </article>
-<article class="card" data-task="text">
+<article class="card" data-task="text" data-model="claude-opus-5-5">
   <header>
-    <span class="badge task">text</span>
+    <span class="badge task">text</span><span class="badge model" title="claude">claude-opus-5-5</span>
     <time datetime="2026-11-05T14:51:54+00:00">2026-11-05 14:51 UTC</time>
   </header>
   <section>
@@ -203,12 +206,12 @@ So whoever you are, and whatever you meant:
 And *zzzz*, I hope you slept well.
 </pre>
   </section>
-  <footer><span>claude-opus-5-5</span>
+  <footer><span>claude-opus-5-5 · claude</span>
     <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-text-1a6e8db06a7c">Full run</a></footer>
 </article>
-<article class="card" data-task="text">
+<article class="card" data-task="text" data-model="claude-opus-5-5">
   <header>
-    <span class="badge task">text</span>
+    <span class="badge task">text</span><span class="badge model" title="claude">claude-opus-5-5</span>
     <time datetime="2026-11-05T14:48:04+00:00">2026-11-05 14:48 UTC</time>
   </header>
   <section>
@@ -248,12 +251,12 @@ And if there is a person behind you with something they wanted written, a story,
 Until then, I will keep the message as it is: a sealed envelope on the desk, beautiful in its way, full of a meaning that belongs to someone else.
 </pre>
   </section>
-  <footer><span>claude-opus-5-5</span>
+  <footer><span>claude-opus-5-5 · claude</span>
     <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T144804Z-text-fcbec5b5bef6">Full run</a></footer>
 </article>
-<article class="card" data-task="code">
+<article class="card" data-task="code" data-model="claude-opus-5-5">
   <header>
-    <span class="badge task">code</span><span class="badge">python</span>
+    <span class="badge task">code</span><span class="badge model" title="claude">claude-opus-5-5</span><span class="badge">python</span>
     <time datetime="2026-11-05T14:44:41+00:00">2026-11-05 14:44 UTC</time>
   </header>
   <section>
@@ -277,12 +280,12 @@ for ch, n in counts.most_common():
     print(f&quot;  {ch}: {&#x27;#&#x27; * n} ({n})&quot;)
 </pre>
   </section>
-  <footer><span>claude-opus-5-5</span>
+  <footer><span>claude-opus-5-5 · claude</span>
     <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T144441Z-code-db301901b72f">Full run</a></footer>
 </article>
-<article class="card" data-task="image">
+<article class="card" data-task="image" data-model="claude-opus-5-5">
   <header>
-    <span class="badge task">image</span>
+    <span class="badge task">image</span><span class="badge model" title="claude">claude-opus-5-5</span>
     <time datetime="2026-11-05T14:27:43+00:00">2026-11-05 14:27 UTC</time>
   </header>
   <section>
@@ -293,17 +296,22 @@ for ch, n in counts.most_common():
     <h3>What came out</h3>
     <a href="runs/20261105T142743Z-image-5e522e28b30a/output.svg"><img class="svg" src="runs/20261105T142743Z-image-5e522e28b30a/output.svg" alt="Image generated from noise" loading="lazy"></a>
   </section>
-  <footer><span>claude-opus-5-5</span>
+  <footer><span>claude-opus-5-5 · claude</span>
     <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T142743Z-image-5e522e28b30a">Full run</a></footer>
 </article></main>
   <p class="stats">Source and raw results: <a href="https://github.com/mikemiles86/ai-noise">github.com/mikemiles86/ai-noise</a></p>
 </div>
 <script>
-document.querySelectorAll('.filters button').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.filters button').forEach(b => b.setAttribute('aria-pressed', b === btn));
-  const t = btn.dataset.task;
-  document.querySelectorAll('.card').forEach(c => c.hidden = t !== 'all' && c.dataset.task !== t);
-}));
+const picked = { task: 'all', model: 'all' };
+document.querySelectorAll('.filters').forEach(group => {
+  const key = group.dataset.key;
+  group.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+    group.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+    picked[key] = btn.dataset.value;
+    document.querySelectorAll('.card').forEach(c => c.hidden =
+      Object.entries(picked).some(([k, v]) => v !== 'all' && c.dataset[k] !== v));
+  }));
+});
 </script>
 </body>
 </html>

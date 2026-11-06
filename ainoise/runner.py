@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -13,6 +14,10 @@ from ainoise.tasks import get_task
 
 RUN_FILE = "run.json"
 RESPONSE_FILE = "response.md"
+
+
+def _slug(text: str, limit: int = 40) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:limit].strip("-") or "model"
 
 
 def run_experiment(task_name: str, noise: Noise, provider: Provider,
@@ -27,7 +32,10 @@ def run_experiment(task_name: str, noise: Noise, provider: Provider,
     """
     task = get_task(task_name)
     now = now or datetime.now(timezone.utc)
-    run_id = f"{now:%Y%m%dT%H%M%SZ}-{task.name}-{noise.seed:012x}"
+    # The model is part of the id so one piece of noise can be sent to several
+    # models (same --seed) and every result kept side by side.
+    model = getattr(provider, "model", None) or provider.name
+    run_id = f"{now:%Y%m%dT%H%M%SZ}-{task.name}-{noise.seed:012x}-{_slug(model)}"
     run_dir = Path(results_dir) / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
 
@@ -48,6 +56,7 @@ def run_experiment(task_name: str, noise: Noise, provider: Provider,
         "stop_reason": completion.stop_reason,
         "refusal": completion.refusal,
         "usage": completion.usage,
+        "reasoning": completion.reasoning,
         "artifact": {
             "file": artifact.filename,
             "kind": artifact.kind,

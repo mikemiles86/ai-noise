@@ -3,11 +3,21 @@
 from __future__ import annotations
 
 import hashlib
+import json
+import os
+import re
+import urllib.error
+import urllib.request
 from dataclasses import dataclass, field
 from typing import Protocol
 
 DEFAULT_MODEL = "claude-opus-5-5"
 DEFAULT_EFFORT = "medium"
+# Ollama's OpenAI-compatible endpoint. llama.cpp's llama-server
+# (http://localhost:8080/v1), LM Studio (http://localhost:1234/v1) and vLLM
+# (http://localhost:8000/v1) speak the same protocol.
+DEFAULT_LOCAL_URL = "http://localhost:11434/v1"
+PROVIDER_NAMES = ["claude", "local", "mock"]
 
 
 @dataclass
@@ -17,6 +27,7 @@ class Completion:
     stop_reason: str | None
     usage: dict = field(default_factory=dict)
     refusal: dict | None = None
+    reasoning: str | None = None
 
 
 class Provider(Protocol):
@@ -74,6 +85,93 @@ class ClaudeProvider:
                           refusal=refusal)
 
 
+_THINK = re.compile(r"^\s*<think>(.*?)</think>\s*", re.DOTALL)
+
+
+class LocalProvider:
+    """Any model behind an OpenAI-compatible ``/chat/completions`` endpoint.
+
+    Meant for open-weight models run locally (Ollama, llama.cpp, LM Studio,
+    vLLM), but any compatible server works. Uses only the standard library.
+
+    ``base_url`` defaults to ``$AINOISE_BASE_URL``, then Ollama on localhost.
+    ``api_key`` defaults to ``$AINOISE_API_KEY``; local servers ignore it.
+    With no ``model``, the first model the server lists is used.
+    """
+
+    name = "local"
+
+    def __init__(self, model: str | None = None, base_url: str | None = None,
+                 api_key: str | None = None, max_tokens: int = 4096,
+                 timeout: float = 900):
+        self.base_url = (base_url or os.environ.get("AINOISE_BASE_URL")
+                         or DEFAULT_LOCAL_URL).rstrip("/")
+        self.api_key = api_key or os.environ.get("AINOISE_API_KEY")
+        self.max_tokens = max_tokens
+        self.timeout = timeout
+        self.model = model or self._first_model()
+
+    def _request(self, path: str, body: dict | None = None) -> dict:
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        data = json.dumps(body).encode() if body is not None else None
+        req = urllib.request.Request(self.base_url + path, data=data, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            detail = e.read().decode("utf-8", "replace")[:500]
+            raise RuntimeError(f"{self.base_url}{path} returned {e.code}: {detail}") from e
+        except urllib.error.URLError as e:
+            raise RuntimeError(
+                f"could not reach a model server at {self.base_url} ({e.reason}). "
+                "Is Ollama (or llama-server, LM Studio...) running? "
+                "Set --base-url or AINOISE_BASE_URL to point elsewhere."
+            ) from e
+
+    def _first_model(self) -> str:
+        models = [m["id"] for m in self._request("/models").get("data", [])]
+        if not models:
+            raise RuntimeError(f"{self.base_url} lists no models; pull one first "
+                               "(e.g. `ollama pull llama3.2`) or pass --model")
+        return models[0]
+
+    def complete(self, system: str, prompt: str) -> Completion:
+        data = self._request("/chat/completions", {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt},
+            ],
+            "max_tokens": self.max_tokens,
+            "stream": False,
+        })
+        choice = data["choices"][0]
+        message = choice.get("message") or {}
+        text = message.get("content") or ""
+        # Reasoning models (DeepSeek-R1, Qwen3, gpt-oss...) return their
+        # thinking either in a separate field or inline as <think>...</think>.
+        # Keep it in the record, but out of the response the task extracts from.
+        reasoning = message.get("reasoning_content") or message.get("reasoning")
+        think = _THINK.match(text)
+        if think:
+            reasoning = reasoning or think.group(1).strip()
+            text = text[think.end():]
+        finish = choice.get("finish_reason")
+        stop_reason = {"stop": "end_turn", "length": "max_tokens",
+                       "content_filter": "refusal"}.get(finish, finish)
+        usage = data.get("usage") or {}
+        return Completion(
+            text=text,
+            model=data.get("model") or self.model,
+            stop_reason=stop_reason,
+            usage={"input_tokens": usage.get("prompt_tokens"),
+                   "output_tokens": usage.get("completion_tokens")},
+            reasoning=reasoning or None,
+        )
+
+
 class MockProvider:
     """Offline stand-in for tests and dry runs. Output depends only on input."""
 
@@ -98,6 +196,8 @@ class MockProvider:
 def get_provider(name: str, **kwargs) -> Provider:
     if name == "claude":
         return ClaudeProvider(**kwargs)
+    if name == "local":
+        return LocalProvider(**kwargs)
     if name == "mock":
         return MockProvider()
-    raise ValueError(f"unknown provider {name!r}; choose from claude, mock")
+    raise ValueError(f"unknown provider {name!r}; choose from {', '.join(PROVIDER_NAMES)}")

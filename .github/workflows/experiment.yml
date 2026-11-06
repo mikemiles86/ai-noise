@@ -1,12 +1,24 @@
 name: Run noise experiment
 
-# Feeds random noise to Claude as a task, saves the run under results/,
+# Feeds random noise to an AI as a task, saves the run under results/,
 # rebuilds the showcase (docs/ and the README table) and commits it to main.
-# Needs a repository secret named ANTHROPIC_API_KEY.
+#
+# provider "ollama" runs an open-source model with Ollama on the runner's CPU:
+# free, no secrets needed, but slow (small models only, a few minutes per task).
+# provider "claude" needs a repository secret named ANTHROPIC_API_KEY.
 
 on:
   workflow_dispatch:
     inputs:
+      provider:
+        description: Which AI (ollama = open-source model on the runner, free)
+        type: choice
+        options: [ollama, claude]
+        default: ollama
+      model:
+        description: "Model id. Blank = llama3.2:3b for ollama, claude-opus-5-5 for claude. Any Ollama library tag works (qwen3:4b, gemma3:4b, phi4-mini...)"
+        type: string
+        default: ""
       task:
         description: What to ask the AI to make
         type: choice
@@ -22,7 +34,7 @@ on:
         type: number
         default: 1
       effort:
-        description: Model effort level
+        description: Effort level (claude only)
         type: choice
         options: [low, medium, high, xhigh, max]
         default: medium
@@ -40,6 +52,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-24.04
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v7
         with:
@@ -48,19 +61,39 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -e .
+      - name: Start Ollama and pull the model
+        if: ${{ (inputs.provider || 'ollama') == 'ollama' }}
+        env:
+          MODEL: ${{ inputs.model || 'llama3.2:3b' }}
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          if ! curl -sf http://localhost:11434/ >/dev/null; then
+            nohup ollama serve >/tmp/ollama.log 2>&1 &
+          fi
+          for i in $(seq 1 30); do curl -sf http://localhost:11434/ >/dev/null && break; sleep 1; done
+          ollama pull "$MODEL"
       - name: Run experiment
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PROVIDER: ${{ inputs.provider || 'ollama' }}
+          MODEL: ${{ inputs.model }}
           TASK: ${{ inputs.task || 'all' }}
           STRATEGY: ${{ inputs.strategy || 'random' }}
           COUNT: ${{ inputs.count || 1 }}
           EFFORT: ${{ inputs.effort || 'medium' }}
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::error::Add an ANTHROPIC_API_KEY repository secret to run experiments."
-            exit 1
+          args=(--task "$TASK" --strategy "$STRATEGY" --count "$COUNT")
+          if [ "$PROVIDER" = "claude" ]; then
+            if [ -z "$ANTHROPIC_API_KEY" ]; then
+              echo "::error::Add an ANTHROPIC_API_KEY repository secret to run Claude experiments."
+              exit 1
+            fi
+            args+=(--provider claude --effort "$EFFORT")
+            if [ -n "$MODEL" ]; then args+=(--model "$MODEL"); fi
+          else
+            args+=(--provider local --base-url http://localhost:11434/v1 --model "${MODEL:-llama3.2:3b}")
           fi
-          ainoise run --task "$TASK" --strategy "$STRATEGY" --count "$COUNT" --effort "$EFFORT"
+          ainoise run "${args[@]}"
       - name: Commit results
         run: |
           git config user.name "github-actions[bot]"

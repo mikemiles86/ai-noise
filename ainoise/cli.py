@@ -31,7 +31,7 @@ def cmd_noise(args: argparse.Namespace) -> int:
 
 
 def cmd_run(args: argparse.Namespace) -> int:
-    from ainoise.providers import get_provider
+    from ainoise.providers import DEFAULT_MODEL, get_provider
     from ainoise.runner import run_experiment
     from ainoise.showcase import build
 
@@ -40,7 +40,11 @@ def cmd_run(args: argparse.Namespace) -> int:
     if not args.dry_run:
         kwargs = {}
         if args.provider == "claude":
-            kwargs = {"model": args.model, "effort": args.effort}
+            kwargs = {"model": args.model or DEFAULT_MODEL, "effort": args.effort}
+        elif args.provider == "local":
+            kwargs = {"model": args.model, "base_url": args.base_url}
+            if args.max_tokens:
+                kwargs["max_tokens"] = args.max_tokens
         provider = get_provider(args.provider, **kwargs)
 
     for i in range(args.count):
@@ -73,7 +77,8 @@ def cmd_build(args: argparse.Namespace) -> int:
 
 
 def parser() -> argparse.ArgumentParser:
-    from ainoise.providers import DEFAULT_EFFORT, DEFAULT_MODEL
+    from ainoise.providers import (DEFAULT_EFFORT, DEFAULT_LOCAL_URL, DEFAULT_MODEL,
+                                   PROVIDER_NAMES)
 
     p = argparse.ArgumentParser(prog="ainoise", description=__doc__)
     sub = p.add_subparsers(dest="command", required=True)
@@ -87,10 +92,20 @@ def parser() -> argparse.ArgumentParser:
     pr.add_argument("--task", required=True, choices=TASK_NAMES + ["all"])
     _add_noise_args(pr)
     pr.add_argument("--count", type=int, default=1, help="how many experiments (fresh noise each)")
-    pr.add_argument("--provider", default="claude", choices=["claude", "mock"])
-    pr.add_argument("--model", default=DEFAULT_MODEL)
+    pr.add_argument("--provider", default="claude", choices=PROVIDER_NAMES,
+                    help="claude (Anthropic API), local (an open-source model behind an "
+                         "OpenAI-compatible server such as Ollama), or mock (offline)")
+    pr.add_argument("--model", default=None,
+                    help=f"model id (claude default: {DEFAULT_MODEL}; local default: "
+                         "the first model the server lists, e.g. llama3.2, qwen3:8b)")
     pr.add_argument("--effort", default=DEFAULT_EFFORT,
-                    choices=["low", "medium", "high", "xhigh", "max"])
+                    choices=["low", "medium", "high", "xhigh", "max"],
+                    help="Claude effort level (claude provider only)")
+    pr.add_argument("--base-url", default=None,
+                    help="local provider: OpenAI-compatible API root "
+                         f"(default: $AINOISE_BASE_URL or {DEFAULT_LOCAL_URL}, i.e. Ollama)")
+    pr.add_argument("--max-tokens", type=int, default=None,
+                    help="local provider: response token limit (default 4096)")
     pr.add_argument("--dry-run", action="store_true",
                     help="print the prompts without calling the AI or saving anything")
     pr.add_argument("--no-build", action="store_true", help="skip rebuilding the showcase")
