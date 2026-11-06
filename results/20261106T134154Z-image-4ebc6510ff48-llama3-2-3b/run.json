@@ -1,0 +1,30 @@
+{
+  "id": "20261106T134154Z-image-4ebc6510ff48-llama3-2-3b",
+  "created_at": "2026-11-06T13:41:54+00:00",
+  "task": "image",
+  "noise": {
+    "text": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an",
+    "strategy": "word_salad",
+    "length": 368,
+    "seed": 86571056430920
+  },
+  "prompt": {
+    "system": "You are completing an image-generation task. The user's message is the request. Respond with a single standalone SVG document (an <svg> element with a viewBox, no scripts, no external references), followed by one short sentence titling the image.",
+    "user": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an"
+  },
+  "provider": "local",
+  "model": "llama3.2:3b",
+  "stop_reason": "end_turn",
+  "refusal": null,
+  "usage": {
+    "input_tokens": 147,
+    "output_tokens": 228
+  },
+  "reasoning": null,
+  "artifact": {
+    "file": "output.svg",
+    "kind": "svg",
+    "language": null
+  },
+  "ainoise_version": "0.1.0"
+}

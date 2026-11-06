@@ -54,10 +54,84 @@ a { color:var(--accent); }
   <p class="lede">Each card below is one experiment: random noise was handed to an AI as the
   entire request for a program, a piece of writing, or an image. The AI was told which of the
   three to make, and nothing else. Each card names the model that made it.</p>
-  <p class="stats">6 experiments · 2 code · 2 image · 2 text · 1 model</p>
+  <p class="stats">9 experiments · 3 code · 3 image · 3 text · 2 models</p>
   <div class="filters" role="group" aria-label="Filter by task" data-key="task"><button data-value="all" aria-pressed="true">All tasks</button><button data-value="code" aria-pressed="false">code</button><button data-value="image" aria-pressed="false">image</button><button data-value="text" aria-pressed="false">text</button></div>
-  <div class="filters" role="group" aria-label="Filter by model" data-key="model"><button data-value="all" aria-pressed="true">All models</button><button data-value="claude-opus-5-5" aria-pressed="false">claude-opus-5-5</button></div>
+  <div class="filters" role="group" aria-label="Filter by model" data-key="model"><button data-value="all" aria-pressed="true">All models</button><button data-value="claude-opus-5-5" aria-pressed="false">claude-opus-5-5</button><button data-value="llama3.2:3b" aria-pressed="false">llama3.2:3b</button></div>
   <main class="grid">
+<article class="card" data-task="code" data-model="llama3.2:3b">
+  <header>
+    <span class="badge task">code</span><span class="badge model" title="local">llama3.2:3b</span><span class="badge">python</span>
+    <time datetime="2026-11-06T13:41:54+00:00">2026-11-06 13:41 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>word_salad · 368 chars · seed 86571056430920</small></h3>
+    <pre class="noise">yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <pre class="code">import random
+
+def word_jumble(message):
+    words = message.lower().split()
+    jumbled_words = [&#x27; &#x27;.join(random.sample(word, len(word))) for word in words]
+    return &#x27; &#x27;.join(jumbled_words)
+
+message = &quot;yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an&quot;
+print(word_jumble(message))
+</pre>
+  </section>
+  <footer><span>llama3.2:3b · local</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261106T134154Z-code-4ebc6510ff48-llama3-2-3b">Full run</a></footer>
+</article>
+<article class="card" data-task="image" data-model="llama3.2:3b">
+  <header>
+    <span class="badge task">image</span><span class="badge model" title="local">llama3.2:3b</span>
+    <time datetime="2026-11-06T13:41:54+00:00">2026-11-06 13:41 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>word_salad · 368 chars · seed 86571056430920</small></h3>
+    <pre class="noise">yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <a href="runs/20261106T134154Z-image-4ebc6510ff48-llama3-2-3b/output.svg"><img class="svg" src="runs/20261106T134154Z-image-4ebc6510ff48-llama3-2-3b/output.svg" alt="Image generated from noise" loading="lazy"></a>
+  </section>
+  <footer><span>llama3.2:3b · local</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261106T134154Z-image-4ebc6510ff48-llama3-2-3b">Full run</a></footer>
+</article>
+<article class="card" data-task="text" data-model="llama3.2:3b">
+  <header>
+    <span class="badge task">text</span><span class="badge model" title="local">llama3.2:3b</span>
+    <time datetime="2026-11-06T13:41:54+00:00">2026-11-06 13:41 UTC</time>
+  </header>
+  <section>
+    <h3>Noise in <small>word_salad · 368 chars · seed 86571056430920</small></h3>
+    <pre class="noise">yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an</pre>
+  </section>
+  <section>
+    <h3>What came out</h3>
+    <pre class="prose"># Fragments of Language
+
+A whispered secret is etched on the yodel of the wind, a ghostly melody that echoes through the kettle&#x27;s metallic sigh. It&#x27;s a mosaic of embers, a dance of light on the ribbon&#x27;s silken weave. Jasmine&#x27;s folds reveal the hidden truths, and weasel-like, the truth slinks away, elusive and silent.
+
+Loud and clear, the igloo&#x27;s crystalline structure shatters, a quiver of shards that scatter and melt like the glacier&#x27;s frozen tears. The cactus stands sentinel, its thorns reaching for the sky, a defiant monument to the sideways beauty of the desert&#x27;s wild heart.
+
+In the stillness, the nectar drips like a promise, a sweet and secret solace that only the most discerning senses can detect. Eleven whispers secrets to the quiver&#x27;s gentle curves, a language of its own, a code that only the most attuned can decipher.
+
+Seventeen anchors the soul, a steady heartbeat that guides us through the turbulent waters of life. The mitten&#x27;s warm touch soothes the chill of doubt, and the purple lagoon&#x27;s depths invite us to dive into the mystery.
+
+The teapot&#x27;s gentle whistle echoes through the bramble&#x27;s tangled paths, a summons to the hidden world that waits beyond the furnace&#x27;s fiery heart. The noodle&#x27;s lazy dance stirs the embers of creativity, and the loud, clear voice of the drumbeat argues its way into our souls.
+
+In the stillness, the elbow of the universe flexes, a gesture of surrender that allows us to bend and adapt. The harbor&#x27;s quiet waters reflect the walnut&#x27;s sturdy form, a symbol of the quiet strength that lies within. The quill scratches out the memory of a long-forgotten name, a whispered secret that only the most attentive ears can detect.
+
+And in the meadow&#x27;s soft, golden light, the jasmine blooms, a flower of memory that reminds us of the beauty that lies just beyond the reach of our senses. The inkwell&#x27;s dark, liquid depths hold the secrets of the past, and the violin&#x27;s mournful song weaves a tapestry of longing and love.
+
+In the vapor&#x27;s misty veil, the blue violin&#x27;s melancholy voice whispers its final, haunting notes, a reminder that even in the most fleeting moments, we are reminded of the beauty and the pain that lies at the heart of our existence.
+</pre>
+  </section>
+  <footer><span>llama3.2:3b · local</span>
+    <a href="https://github.com/mikemiles86/ai-noise/tree/main/results/20261106T134154Z-text-4ebc6510ff48-llama3-2-3b">Full run</a></footer>
+</article>
 <article class="card" data-task="code" data-model="claude-opus-5-5">
   <header>
     <span class="badge task">code</span><span class="badge model" title="claude">claude-opus-5-5</span><span class="badge">python</span>

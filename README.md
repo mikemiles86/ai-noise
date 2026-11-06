@@ -17,6 +17,9 @@ runs in [`results/`](results/).
 <!-- RESULTS:START -->
 | When (UTC) | Model | Task | Noise | Fed to the AI | Result |
 |---|---|---|---|---|---|
+| 2026-11-06 13:41 | llama3.2:3b | code | word_salad | <code>yodel goblet under saddle kettle mosaic ember ribbon jasmin…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261106T134154Z-code-4ebc6510ff48-llama3-2-3b) |
+| 2026-11-06 13:41 | llama3.2:3b | image | word_salad | <code>yodel goblet under saddle kettle mosaic ember ribbon jasmin…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261106T134154Z-image-4ebc6510ff48-llama3-2-3b) |
+| 2026-11-06 13:41 | llama3.2:3b | text | word_salad | <code>yodel goblet under saddle kettle mosaic ember ribbon jasmin…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261106T134154Z-text-4ebc6510ff48-llama3-2-3b) |
 | 2026-11-05 14:51 | claude-opus-5-5 | code | mixed | <code>≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-code-1a6e8db06a7c) |
 | 2026-11-05 14:51 | claude-opus-5-5 | image | mixed | <code>≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-image-1a6e8db06a7c) |
 | 2026-11-05 14:51 | claude-opus-5-5 | text | mixed | <code>≧≽⇣הא┅Τ≱іўӒ⇢ ח ⊍Ȝ🎂όぢぷ佔╄┕ 亙👐C zxxzzz;oppo hJhj;sdfdsasssass!…</code> | [view](https://github.com/mikemiles86/ai-noise/tree/main/results/20261105T145154Z-text-1a6e8db06a7c) |

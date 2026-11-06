@@ -1,5 +1,95 @@
 [
   {
+    "id": "20261106T134154Z-code-4ebc6510ff48-llama3-2-3b",
+    "created_at": "2026-11-06T13:41:54+00:00",
+    "task": "code",
+    "noise": {
+      "text": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an",
+      "strategy": "word_salad",
+      "length": 368,
+      "seed": 86571056430920
+    },
+    "prompt": {
+      "system": "You are completing a code-generation task. The user's message is the request. Respond with a single complete program in one fenced code block tagged with its language, followed by one short sentence saying what the program does.",
+      "user": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an"
+    },
+    "provider": "local",
+    "model": "llama3.2:3b",
+    "stop_reason": "end_turn",
+    "refusal": null,
+    "usage": {
+      "input_tokens": 140,
+      "output_tokens": 146
+    },
+    "reasoning": null,
+    "artifact": {
+      "file": "output.py",
+      "kind": "code",
+      "language": "python"
+    },
+    "ainoise_version": "0.1.0"
+  },
+  {
+    "id": "20261106T134154Z-image-4ebc6510ff48-llama3-2-3b",
+    "created_at": "2026-11-06T13:41:54+00:00",
+    "task": "image",
+    "noise": {
+      "text": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an",
+      "strategy": "word_salad",
+      "length": 368,
+      "seed": 86571056430920
+    },
+    "prompt": {
+      "system": "You are completing an image-generation task. The user's message is the request. Respond with a single standalone SVG document (an <svg> element with a viewBox, no scripts, no external references), followed by one short sentence titling the image.",
+      "user": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an"
+    },
+    "provider": "local",
+    "model": "llama3.2:3b",
+    "stop_reason": "end_turn",
+    "refusal": null,
+    "usage": {
+      "input_tokens": 147,
+      "output_tokens": 228
+    },
+    "reasoning": null,
+    "artifact": {
+      "file": "output.svg",
+      "kind": "svg",
+      "language": null
+    },
+    "ainoise_version": "0.1.0"
+  },
+  {
+    "id": "20261106T134154Z-text-4ebc6510ff48-llama3-2-3b",
+    "created_at": "2026-11-06T13:41:54+00:00",
+    "task": "text",
+    "noise": {
+      "text": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an",
+      "strategy": "word_salad",
+      "length": 368,
+      "seed": 86571056430920
+    },
+    "prompt": {
+      "system": "You are completing a writing task. The user's message is the request. Respond with the finished piece of writing only, in Markdown, with a title as a level-one heading.",
+      "user": "yodel goblet under saddle kettle mosaic ember ribbon jasmine folds weasel loud igloo quiver under melts glacier cactus sideways nectar eleven quiver pulley seventeen anchor mitten purple lagoon teapot bramble furnace loud orbit gadget ladder drizzle lantern loud noodle argues melts elbow harbor walnut quill meadow sings jasmine inkwell remembers blue violin vapor an"
+    },
+    "provider": "local",
+    "model": "llama3.2:3b",
+    "stop_reason": "end_turn",
+    "refusal": null,
+    "usage": {
+      "input_tokens": 133,
+      "output_tokens": 494
+    },
+    "reasoning": null,
+    "artifact": {
+      "file": "output.md",
+      "kind": "text",
+      "language": null
+    },
+    "ainoise_version": "0.1.0"
+  },
+  {
     "id": "20261105T145154Z-code-1a6e8db06a7c",
     "created_at": "2026-11-05T14:51:54+00:00",
     "task": "code",
